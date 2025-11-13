@@ -1,3 +1,10 @@
+// serviciosProfesionales.wlk
+// serviciosProfesionales.wlk
+// serviciosProfesionales.wlk
+// serviciosProfesionales.wlk
+// serviciosProfesionales.wlk
+// serviciosProfesionales.wlk
+// serviciosProfesionales.wlk
 class Profesional {
   var property universidadQueEstudiaron
   
@@ -70,5 +77,45 @@ class EmpresaDeServicio {
   
   method esDeGenteAcotada() = profesionalesContratados.all(
     { p => p.provinciasParaTrabajar().size() <= 3 }
+  )
+  
+  method puedeSatisfacerASolicitante(
+    unSolicitante
+  ) = unSolicitante.puedeSerAtendidoPorUnProfesional(profesionalesContratados)
+}
+
+class Solicitante {
+  method puedeSerAtendidoPorUnProfesional(profesionales)
+}
+
+class Persona inherits Solicitante {
+  var property provinciaEnLaQueVive
+  
+  override method puedeSerAtendidoPorUnProfesional(
+    profesionales
+  ) = profesionales.any(
+    { p => p.provinciasParaTrabajar().contains(provinciaEnLaQueVive) }
+  )
+}
+
+class Institucion inherits Solicitante {
+  const property universidades = #{}
+  
+  override method puedeSerAtendidoPorUnProfesional(
+    profesionales
+  ) = profesionales.any(
+    { p => universidades.contains(p.universidadQueEstudiaron()) }
+  )
+}
+
+class Club inherits Solicitante {
+  const property provinciaEnLaQueSeEncuentra = #{}
+  
+  override method puedeSerAtendidoPorUnProfesional(
+    profesionales
+  ) = profesionales.any(
+    { p => provinciaEnLaQueSeEncuentra.any(
+        { prov => p.provinciasParaTrabajar().contains(prov) }
+      ) }
   )
 }
