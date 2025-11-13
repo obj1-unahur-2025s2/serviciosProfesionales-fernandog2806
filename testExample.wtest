@@ -1,9 +1,47 @@
-import example.pepita
+import example.*
 
-describe "group of tests for pepita" {
+describe "test de la etapa 1" {
+  const sanMartin = new Universidad(
+                                      provinciaEnLaQueSeUbica = "buenos aires",
+                                      honorariosDelTrabajador = 4200)
+  const rosario = new Universidad(
+                                      provinciaEnLaQueSeUbica = "santa fe",
+                                      honorariosDelTrabajador = 2800)
+  const corrientes = new Universidad(
+                                      provinciaEnLaQueSeUbica = "corrientes",
+                                      honorariosDelTrabajador = 4200)
+  const hurlingham = new Universidad(
+                                      provinciaEnLaQueSeUbica = "buenos aires",
+                                      honorariosDelTrabajador = 4200)
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+  const juana = new ProfesionalVinculado(
+                                    universidadQueEstudiaron = rosario)
+  const melina = new ProfesionalDelLitoral(
+                                    universidadQueEstudiaron = corrientes)
+  const rocio = new ProfesionalLibre(
+                                    universidadQueEstudiaron = hurlingham,
+                                    honorariosPorHora = 5000,
+                                    provinciasEnLaQuePuedeTrabajar = #{"santa fe", "cordoba", "buenos aires"})
+  const luciana = new ProfesionalLibre(
+                                    universidadQueEstudiaron = rosario,
+                                    honorariosPorHora = 3200,
+                                    provinciasEnLaQuePuedeTrabajar = #{"santa fe", "entre rios"})
+  
+  const empresa = new EmpresaDeServicio(
+    honorarios = 4000,
+    profesionalesContratados = #{juana, melina, rocio, luciana}
+  )
+  test "1er test" {
+    
+    assert.equals(2,empresa.cuantosEstudiaronEn(rosario))
+    assert.equals(1, empresa.cuantosEstudiaronEn(hurlingham))
+    assert.equals(0, empresa.cuantosEstudiaronEn(sanMartin))
+  }
+  test "2do test" {
+    assert.equals(#{rocio},empresa.profesionalesCaros())
+  }
+  test "3er test" {
+    assert.equals(#{corrientes,rosario,hurlingham},empresa.universidadesFormadoras())
   }
 
 }
