@@ -1,4 +1,4 @@
-import example.*
+import serviciosProfesionales.*
 
 describe "test de la etapa 1" {
   const sanMartin = new Universidad(
